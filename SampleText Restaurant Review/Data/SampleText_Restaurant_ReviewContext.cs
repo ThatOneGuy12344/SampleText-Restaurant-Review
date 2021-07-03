@@ -15,5 +15,6 @@ namespace SampleText_Restaurant_Review.Data
         }
 
         public DbSet<SampleText_Restaurant_Review.Models.Restaurant> Restaurant { get; set; }
+        public DbSet<SampleText_Restaurant_Review.Models.Review> Reviews { get; set; }
     }
 }
