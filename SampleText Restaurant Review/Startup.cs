@@ -10,6 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SampleText_Restaurant_Review.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using SampleText_Restaurant_Review.Models;
 
 namespace SampleText_Restaurant_Review
 {
@@ -29,6 +32,12 @@ namespace SampleText_Restaurant_Review
 
             services.AddDbContext<SampleText_Restaurant_ReviewContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SampleText_Restaurant_ReviewContext")));
+
+            services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>()
+   .AddDefaultUI()
+    .AddEntityFrameworkStores<SampleText_Restaurant_ReviewContext>()
+    .AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +56,8 @@ namespace SampleText_Restaurant_Review
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
