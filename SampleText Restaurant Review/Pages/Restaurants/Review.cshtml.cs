@@ -47,6 +47,7 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
                 return NotFound();
             }
             Review.Restaurant = Restaurant;
+            Review.ReviewTime = DateTime.Now;
             _context.Reviews.Add(Review);
             await _context.SaveChangesAsync();
 

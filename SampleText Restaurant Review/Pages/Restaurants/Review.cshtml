@@ -17,6 +17,11 @@
                 <span asp-validation-for="Review.Reviewer" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Review.Rating" class="control-label"></label>
+                <input asp-for="Review.Rating" class="form-control" />
+                <span asp-validation-for="Review.Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Review.Text" class="control-label"></label>
                 <input asp-for="Review.Text" class="form-control" />
                 <span asp-validation-for="Review.Text" class="text-danger"></span>

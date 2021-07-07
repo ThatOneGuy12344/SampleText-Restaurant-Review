@@ -43,6 +43,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            Review.ReviewTime = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return Page();

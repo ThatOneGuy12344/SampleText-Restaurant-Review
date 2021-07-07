@@ -23,7 +23,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
 
         public async Task OnGetAsync()
         {
-            Review = await _context.Reviews.ToListAsync();
+            Review = await _context.Reviews.Include(item => item.Restaurant).ToListAsync();
         }
     }
 }

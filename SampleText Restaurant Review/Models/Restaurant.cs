@@ -9,6 +9,7 @@ namespace SampleText_Restaurant_Review.Models
     public class Restaurant
     {
         public int ID { get; set; }
+        [Display(Name ="Restaurant Name")]
         public string Name { get; set; }
 
         [DataType(DataType.Date)]
