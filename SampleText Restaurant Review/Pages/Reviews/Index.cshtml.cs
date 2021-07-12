@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SampleText_Restaurant_Review.Data;
 using SampleText_Restaurant_Review.Models;
@@ -20,10 +21,29 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
         }
 
         public IList<Review> Review { get;set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
+        public SelectList Restaurants { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string ReviewRestaurant { get; set; }
 
         public async Task OnGetAsync()
         {
-            Review = await _context.Reviews.Include(item => item.Restaurant).ToListAsync();
+            IQueryable<string> genreQuery = from r in _context.Reviews
+                                            orderby r.Restaurant.Name
+                                            select r.Restaurant.Name;
+            var reviews = from r in _context.Reviews
+                          select r;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                reviews = reviews.Where(s => s.Reviewer.Contains(SearchString));
+            }
+            if (!string.IsNullOrEmpty(ReviewRestaurant))
+            {
+                reviews = reviews.Where(s => s.Restaurant.Name == ReviewRestaurant);
+            }
+            Restaurants = new SelectList(await genreQuery.Distinct().ToListAsync());
+            Review = await reviews.Include(item => item.Restaurant).ToListAsync();
         }
     }
 }
