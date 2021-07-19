@@ -23,7 +23,7 @@ namespace SampleText_Restaurant_Review.Pages.AuditLogs
 
         public async Task OnGetAsync()
         {
-            AuditRecord = await _context.AuditRecord.Include(item => item.Restaurant).ToListAsync();
+            AuditRecord = await _context.AuditRecord.Include(item => item.Restaurant).Include(item => item.Review).ToListAsync();
         }
     }
 }

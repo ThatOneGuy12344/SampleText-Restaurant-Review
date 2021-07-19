@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.AuditRecord[0].Restaurant.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.AuditRecord[0].Review.ID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AuditRecord[0].AuditActionType)
             </th>
             <th>
@@ -32,6 +35,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Restaurant.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review.ID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AuditActionType)
