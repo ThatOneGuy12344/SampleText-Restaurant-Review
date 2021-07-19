@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleText_Restaurant_Review.Data;
 
 namespace SampleText_Restaurant_Review.Migrations
 {
     [DbContext(typeof(SampleText_Restaurant_ReviewContext))]
-    partial class SampleText_Restaurant_ReviewContextModelSnapshot : ModelSnapshot
+    [Migration("20210719071059_auditlogs")]
+    partial class auditlogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,8 +239,8 @@ namespace SampleText_Restaurant_Review.Migrations
                     b.Property<DateTime>("DateTimeStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("FullNameId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("RestaurantID")
                         .HasColumnType("int");
@@ -247,6 +249,8 @@ namespace SampleText_Restaurant_Review.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Audit_ID");
+
+                    b.HasIndex("FullNameId");
 
                     b.HasIndex("RestaurantID");
 
@@ -373,6 +377,10 @@ namespace SampleText_Restaurant_Review.Migrations
 
             modelBuilder.Entity("SampleText_Restaurant_Review.Models.AuditRecord", b =>
                 {
+                    b.HasOne("SampleText_Restaurant_Review.Models.ApplicationUser", "FullName")
+                        .WithMany()
+                        .HasForeignKey("FullNameId");
+
                     b.HasOne("SampleText_Restaurant_Review.Models.Restaurant", "Restaurant")
                         .WithMany()
                         .HasForeignKey("RestaurantID");

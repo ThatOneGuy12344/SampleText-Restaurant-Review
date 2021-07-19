@@ -14,7 +14,7 @@ namespace SampleText_Restaurant_Review.Models
         [Display(Name = "Audit Action")]
         public string AuditActionType { get; set; }
         [Display(Name = "Performed By")]
-        public ApplicationUser FullName { get; set; }
+        public string FullName { get; set; }
         [Display(Name = "Date/Time Stamp")]
         [DataType(DataType.DateTime)]
         public DateTime DateTimeStamp { get; set; }

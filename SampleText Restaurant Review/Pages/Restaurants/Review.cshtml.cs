@@ -49,8 +49,21 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
             Review.Restaurant = Restaurant;
             Review.ReviewTime = DateTime.Now;
             _context.Reviews.Add(Review);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Reviewed Restaurant";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                auditrecord.Restaurant = Restaurant;
+                auditrecord.Review = Review;
+                var userID = User.Identity.Name.ToString();
+                auditrecord.FullName = userID;
 
+                _context.AuditRecord.Add(auditrecord);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToPage("./Index");
         }
     }
