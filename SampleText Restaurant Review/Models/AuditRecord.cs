@@ -18,9 +18,8 @@ namespace SampleText_Restaurant_Review.Models
         [Display(Name = "Date/Time Stamp")]
         [DataType(DataType.DateTime)]
         public DateTime DateTimeStamp { get; set; }
-        [Display(Name = "Movie Record ID ")]
-        public Restaurant Restaurant { get; set; }
-        public Review Review { get; set; }
+        public string RestaurantName { get; set; }
+        public int ReviewID { get; set; }
     }
 
 }

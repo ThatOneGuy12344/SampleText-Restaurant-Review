@@ -45,12 +45,25 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
                 return NotFound();
             }
 
-            Review = await _context.Reviews.FindAsync(id);
+            Review = await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Review != null)
             {
                 _context.Reviews.Remove(Review);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    // Create an auditrecord object
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Deleted Review";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.RestaurantName = Review.Restaurant.Name;
+                    auditrecord.ReviewID = Review.ID;
+                    var userID = User.Identity.Name.ToString();
+                    auditrecord.FullName = userID;
+                    _context.AuditRecord.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+                }
             }
 
             return RedirectToPage("./Index");

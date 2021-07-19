@@ -28,7 +28,7 @@ namespace SampleText_Restaurant_Review.Pages.AuditLogs
                 return NotFound();
             }
 
-            AuditRecord = await _context.AuditRecord.Include(item => item.Restaurant).Include(item => item.Review).FirstOrDefaultAsync(m => m.Audit_ID == id);
+            AuditRecord = await _context.AuditRecord.FirstOrDefaultAsync(m => m.Audit_ID == id);
 
             if (AuditRecord == null)
             {

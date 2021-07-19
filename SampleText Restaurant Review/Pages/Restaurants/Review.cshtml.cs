@@ -56,8 +56,8 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
                 var auditrecord = new AuditRecord();
                 auditrecord.AuditActionType = "Reviewed Restaurant";
                 auditrecord.DateTimeStamp = DateTime.Now;
-                auditrecord.Restaurant = Restaurant;
-                auditrecord.Review = Review;
+                auditrecord.RestaurantName = Restaurant.Name;
+                auditrecord.ReviewID = Review.ID;
                 var userID = User.Identity.Name.ToString();
                 auditrecord.FullName = userID;
 
