@@ -49,8 +49,28 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
 
             if (Restaurant != null)
             {
+                foreach (var item in _context.Reviews)
+                {
+                    if (item.Restaurant == Restaurant)
+                    {
+                        _context.Reviews.Remove(item);
+                    }
+                }
                 _context.Restaurant.Remove(Restaurant);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    // Create an auditrecord object
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Deleted Restaurant";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.RestaurantName = Restaurant.Name;
+                    var userID = User.Identity.Name.ToString();
+                    auditrecord.FullName = userID;
+
+                    _context.AuditRecord.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+                }
             }
 
             return RedirectToPage("./Index");
