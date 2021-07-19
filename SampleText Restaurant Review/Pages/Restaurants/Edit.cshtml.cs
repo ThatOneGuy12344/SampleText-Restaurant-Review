@@ -52,7 +52,20 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
 
             try
             {
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    // Create an auditrecord object
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Edited Restaurant";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.RestaurantName = Restaurant.Name;
+                    var userID = User.Identity.Name.ToString();
+                    auditrecord.FullName = userID;
+
+                    _context.AuditRecord.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
