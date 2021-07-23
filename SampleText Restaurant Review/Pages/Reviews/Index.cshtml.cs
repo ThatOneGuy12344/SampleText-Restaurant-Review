@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SampleText_Restaurant_Review.Data;
 using SampleText_Restaurant_Review.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SampleText_Restaurant_Review.Pages.Reviews
 {

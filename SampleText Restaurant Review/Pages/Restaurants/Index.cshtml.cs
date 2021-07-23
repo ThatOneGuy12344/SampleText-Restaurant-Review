@@ -19,11 +19,19 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
             _context = context;
         }
 
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
         public IList<Restaurant> Restaurant { get;set; }
 
         public async Task OnGetAsync()
         {
-            Restaurant = await _context.Restaurant.ToListAsync();
+            var restaurants = from r in _context.Restaurant
+                          select r;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                restaurants = restaurants.Where(s => s.Name.Contains(SearchString));
+            }
+            Restaurant = await restaurants.ToListAsync();
         }
     }
 }

@@ -48,6 +48,7 @@ namespace SampleText_Restaurant_Review.Pages.Restaurants
             }
             Review.Restaurant = Restaurant;
             Review.ReviewTime = DateTime.Now;
+            Review.Reviewer = User.Identity.Name.ToString();
             _context.Reviews.Add(Review);
             //await _context.SaveChangesAsync();
             if (await _context.SaveChangesAsync() > 0)
