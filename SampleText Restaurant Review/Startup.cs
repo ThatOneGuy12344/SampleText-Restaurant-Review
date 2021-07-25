@@ -50,6 +50,8 @@ namespace SampleText_Restaurant_Review
             services.Configure<IdentityOptions>(options =>
             {
                 // Default SignIn settings.
+
+                options.SignIn.RequireConfirmedAccount = true;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
@@ -101,11 +103,12 @@ namespace SampleText_Restaurant_Review
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseAuthentication();
-
+            
+            
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
