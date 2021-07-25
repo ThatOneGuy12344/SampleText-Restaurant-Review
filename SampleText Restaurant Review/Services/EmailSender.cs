@@ -26,7 +26,7 @@ namespace WebPWrecover.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("Joe@contoso.com", Options.SendGridUser),
+                From = new EmailAddress("S10202777@connect.np.edu.sg", Options.SendGridUser),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
