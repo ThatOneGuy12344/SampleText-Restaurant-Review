@@ -31,7 +31,6 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
             }
 
             Review = await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id);
-
             if (Review == null)
             {
                 return NotFound();
@@ -41,7 +40,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             Review.ReviewTime = DateTime.Now;
             if (!ModelState.IsValid)
@@ -49,34 +48,35 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
                 return Page();
             }
 
-            _context.Attach(Review).State = EntityState.Modified;
-
-            try
+            if (Review != null)
             {
-                //await _context.SaveChangesAsync();
-                if (await _context.SaveChangesAsync() > 0)
+                _context.Attach(Review).State = EntityState.Modified;
+                try
                 {
-                    // Create an auditrecord object
-                    var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Edited Review";
-                    auditrecord.DateTimeStamp = DateTime.Now;
-                    auditrecord.RestaurantName = Review.Restaurant.Name;
-                    auditrecord.ReviewID = Review.ID;
-                    var userID = User.Identity.Name.ToString();
-                    auditrecord.FullName = userID;
-                    _context.AuditRecord.Add(auditrecord);
-                    await _context.SaveChangesAsync();
+                    //await _context.SaveChangesAsync();
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        // Create an auditrecord object
+                        var auditrecord = new AuditRecord();
+                        auditrecord.AuditActionType = "Edited Review";
+                        auditrecord.DateTimeStamp = DateTime.Now;
+                        auditrecord.ReviewID = Review.ID;
+                        var userID = User.Identity.Name.ToString();
+                        auditrecord.FullName = userID;
+                        _context.AuditRecord.Add(auditrecord);
+                        await _context.SaveChangesAsync();
+                    }
                 }
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReviewExists(Review.ID))
+                catch (DbUpdateConcurrencyException)
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    if (!ReviewExists(Review.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 
