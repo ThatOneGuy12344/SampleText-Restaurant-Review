@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,31 +13,34 @@ using SampleText_Restaurant_Review.Models;
 
 namespace SampleText_Restaurant_Review.Pages.RolesAssigning
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
-        private readonly SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext _context;
+        private readonly RoleManager<Roles> _roleManager;
 
-        public EditModel(SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext context)
+        public EditModel(RoleManager<Roles> roleManager)
         {
-            _context = context;
+            _roleManager = roleManager;
         }
+
 
         [BindProperty]
         public Roles Roles { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Roles = await _context.Roles.FirstOrDefaultAsync(m => m.ID == id);
+            Roles = await _roleManager.FindByIdAsync(id);
 
             if (Roles == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -48,30 +53,21 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
                 return Page();
             }
 
-            _context.Attach(Roles).State = EntityState.Modified;
+            Roles appRole = await _roleManager.FindByIdAsync(Roles.Id);
 
-            try
+            appRole.Id = Roles.Id;
+            appRole.Name = Roles.Name;
+            appRole.Desc = Roles.Desc;
+
+            IdentityResult roleRuslt = await _roleManager.UpdateAsync(appRole);
+
+            if (roleRuslt.Succeeded)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RolesExists(Roles.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
+
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool RolesExists(int id)
-        {
-            return _context.Roles.Any(e => e.ID == id);
         }
     }
 }

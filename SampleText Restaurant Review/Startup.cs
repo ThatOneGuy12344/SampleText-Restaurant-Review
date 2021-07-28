@@ -36,7 +36,7 @@ namespace SampleText_Restaurant_Review
             services.AddDbContext<SampleText_Restaurant_ReviewContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SampleText_Restaurant_ReviewContext")));
 
-            services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>()
+            services.AddIdentity<ApplicationUser, Roles>()
    .AddDefaultUI()
     .AddEntityFrameworkStores<SampleText_Restaurant_ReviewContext>()
     .AddDefaultTokenProviders();

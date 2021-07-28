@@ -9,7 +9,7 @@ using SampleText_Restaurant_Review.Models;
 
 namespace SampleText_Restaurant_Review.Data
 {
-    public class SampleText_Restaurant_ReviewContext : IdentityDbContext<ApplicationUser>
+    public class SampleText_Restaurant_ReviewContext : IdentityDbContext<ApplicationUser, Roles, string>
     {
         public SampleText_Restaurant_ReviewContext (DbContextOptions<SampleText_Restaurant_ReviewContext> options)
             : base(options)
