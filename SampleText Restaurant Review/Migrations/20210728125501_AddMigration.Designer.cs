@@ -10,8 +10,8 @@ using SampleText_Restaurant_Review.Data;
 namespace SampleText_Restaurant_Review.Migrations
 {
     [DbContext(typeof(SampleText_Restaurant_ReviewContext))]
-    [Migration("20210727114858_AddMigrations")]
-    partial class AddMigrations
+    [Migration("20210728125501_AddMigration")]
+    partial class AddMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,7 +234,8 @@ namespace SampleText_Restaurant_Review.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
@@ -264,7 +265,8 @@ namespace SampleText_Restaurant_Review.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.HasKey("ID");
 
@@ -286,9 +288,6 @@ namespace SampleText_Restaurant_Review.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Desc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IPAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

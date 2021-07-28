@@ -10,6 +10,5 @@ namespace SampleText_Restaurant_Review.Models
     {
         public string Desc { get; set; }
         public DateTime DateCreated { get; set; }
-        public string IPAddress { get; set; }
     }
 }
