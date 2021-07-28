@@ -13,7 +13,6 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Roles.ID" />
             <div class="form-group">
                 <label asp-for="Roles.Name" class="control-label"></label>
                 <input asp-for="Roles.Name" class="form-control" />
@@ -24,6 +23,8 @@
                 <input asp-for="Roles.Desc" class="form-control" />
                 <span asp-validation-for="Roles.Desc" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="Roles.Id" />
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

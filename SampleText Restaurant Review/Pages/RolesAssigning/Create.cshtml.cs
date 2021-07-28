@@ -2,22 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SampleText_Restaurant_Review.Data;
 using SampleText_Restaurant_Review.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SampleText_Restaurant_Review.Pages.RolesAssigning
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
-        private readonly SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext _context;
+        private readonly RoleManager<Roles> _roleManager;
 
-        public CreateModel(SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext context)
+        public CreateModel(RoleManager<Roles> roleManager)
         {
-            _context = context;
+            _roleManager = roleManager;
         }
+
 
         public IActionResult OnGet()
         {
@@ -36,8 +40,11 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
                 return Page();
             }
 
-            _context.Roles.Add(Roles);
-            await _context.SaveChangesAsync();
+            Roles.DateCreated = DateTime.UtcNow;
+            Roles.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+
+            IdentityResult roleRuslt = await _roleManager.CreateAsync(Roles);
+
 
             return RedirectToPage("./Index");
         }
