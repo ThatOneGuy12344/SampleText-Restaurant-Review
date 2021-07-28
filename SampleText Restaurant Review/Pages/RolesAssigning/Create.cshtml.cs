@@ -41,7 +41,6 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
             }
 
             Roles.DateCreated = DateTime.UtcNow;
-            Roles.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
             IdentityResult roleRuslt = await _roleManager.CreateAsync(Roles);
 
