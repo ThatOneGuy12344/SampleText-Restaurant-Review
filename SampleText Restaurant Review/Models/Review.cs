@@ -12,6 +12,7 @@ namespace SampleText_Restaurant_Review.Models
         [Range(1,5)]
         public int Rating { get; set; }
         public string Reviewer { get; set; }
+        [StringLength(500, MinimumLength = 1)]
         public string Text { get; set; }
         [DataType(DataType.Date)]
         public DateTime ReviewTime { get; set; }
