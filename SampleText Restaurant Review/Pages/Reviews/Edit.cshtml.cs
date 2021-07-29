@@ -52,6 +52,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
 
             if (Review != null)
             {
+                Review.Reviewer = User.Identity.Name.ToString();
                 _context.Attach(Review).State = EntityState.Modified;
                 try
                 {
