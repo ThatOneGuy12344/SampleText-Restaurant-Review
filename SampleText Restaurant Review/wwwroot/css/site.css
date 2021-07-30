@@ -24,6 +24,16 @@ a {
   border-color: #1861ac;
 }
 
+#username, #logout {
+    border-radius: 2mm;
+    background-color: white;
+    border: white;
+}
+
+#username:hover, #logout:hover {
+    background-color: lightblue;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
