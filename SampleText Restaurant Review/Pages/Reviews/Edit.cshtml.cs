@@ -42,7 +42,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             Review.ReviewTime = DateTime.Now;
             if (!ModelState.IsValid)
@@ -53,6 +53,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
             if (Review != null)
             {
                 Review.Reviewer = User.Identity.Name.ToString();
+                string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
                 _context.Attach(Review).State = EntityState.Modified;
                 try
                 {

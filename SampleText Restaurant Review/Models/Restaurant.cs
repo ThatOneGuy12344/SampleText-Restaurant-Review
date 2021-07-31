@@ -9,7 +9,7 @@ namespace SampleText_Restaurant_Review.Models
     public class Restaurant
     {
         public int ID { get; set; }
-        [Display(Name ="Restaurant Name"), StringLength(20, MinimumLength = 1)]
+        [Display(Name ="Restaurant Name"), StringLength(20, MinimumLength = 1),Required]
         public string Name { get; set; }
 
         [DataType(DataType.Date)]
