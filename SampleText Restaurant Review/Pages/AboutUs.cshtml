@@ -1,0 +1,44 @@
+﻿@page
+@model AboutUsModel
+@{
+    ViewData["Title"] = "About Us";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Developers of this Web Application:</p>
+<table id="aboutustable">
+    <tr class="abouttr">
+        <th class="name">Name</th>
+        <th id="workedonheader">Pages Developed</th>
+        <th class="contact">Contact Info</th>
+    </tr>
+    <tr class="abouttr">
+        <td class="name">Campion Chew</td>
+        <td class="workedon">
+            <ul>
+                <li>CRUD of Restaurants</li>
+                <li>CRUD of Reviews</li>
+            </ul>
+        </td>
+        <td class="contact"></td>
+    </tr>
+    <tr class="abouttr">
+        <td class="name">Chea Hong Li</td>
+        <td class="workedon">
+            <ul>
+                <li>CRUD of Roles</li>
+                <li>Role Management</li>
+            </ul>
+        </td>
+        <td class="contact">Email: <a>s10206182@connect.np.edu.sg</a></td>
+    </tr>
+    <tr class="abouttr">
+        <td class="name">Timothy Teo</td>
+        <td class="workedon">
+            <ul>
+                <li>User Registration</li>
+            </ul>
+        </td>
+        <td class="contact"></td>
+    </tr>
+</table>

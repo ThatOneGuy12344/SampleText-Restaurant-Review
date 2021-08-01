@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.AuditRecord[0].ReviewID)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.AuditRecord[0].RoleName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AuditRecord[0].AuditActionType)
             </th>
             <th>
@@ -39,6 +42,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ReviewID)
             </td>
+            <th>
+                @Html.DisplayFor(model => item.RoleName)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.AuditActionType)
             </td>

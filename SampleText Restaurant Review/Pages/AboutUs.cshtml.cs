@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SampleText_Restaurant_Review.Pages
 {
-    public class PrivacyModel : PageModel
+    public class AboutUsModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<AboutUsModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public AboutUsModel(ILogger<AboutUsModel> logger)
         {
             _logger = logger;
         }

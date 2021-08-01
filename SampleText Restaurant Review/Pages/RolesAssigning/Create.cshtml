@@ -15,12 +15,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Roles.Name" class="control-label"></label>
-                <input asp-for="Roles.Name" class="form-control" />
+                <input asp-for="Roles.Name" class="form-control" onblur="this.value=strip(this.value);"
+                       required="required" maxlength="10"/>
                 <span asp-validation-for="Roles.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Roles.Desc" class="control-label"></label>
-                <input asp-for="Roles.Desc" class="form-control" />
+                <input asp-for="Roles.Desc" class="form-control" onblur="this.value=strip(this.value);"
+                       required="required" maxlength="30" />
                 <span asp-validation-for="Roles.Desc" class="text-danger"></span>
             </div>
             <div class="form-group">

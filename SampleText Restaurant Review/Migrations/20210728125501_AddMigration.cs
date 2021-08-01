@@ -61,7 +61,8 @@ namespace SampleText_Restaurant_Review.Migrations
                     FullName = table.Column<string>(nullable: true),
                     DateTimeStamp = table.Column<DateTime>(nullable: false),
                     RestaurantName = table.Column<string>(nullable: true),
-                    ReviewID = table.Column<int>(nullable: false)
+                    ReviewID = table.Column<int>(nullable: true),
+                    RoleName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
