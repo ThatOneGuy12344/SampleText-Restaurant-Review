@@ -1,0 +1,38 @@
+﻿@page
+@model SampleText_Restaurant_Review.Pages.Requests.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RestaurantRequests[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RestaurantRequests[0].RequestDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.RestaurantRequests) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Deny" asp-route-id="@item.ID">Deny</a>|
+                <a asp-page="./Accept" asp-route-id="@item.ID">Accept</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
