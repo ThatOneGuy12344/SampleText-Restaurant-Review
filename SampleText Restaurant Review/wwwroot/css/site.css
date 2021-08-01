@@ -34,6 +34,34 @@ a {
     background-color: lightblue;
 }
 
+#mainpage {
+    margin-top: 16%;
+}
+
+#aboutustable {
+    text-align: center;
+}
+
+.aboutustr, .name, #workedonheader, .workedon, .contact {
+    border: solid;
+    padding: 8px;
+    padding-left: 0;
+}
+
+.name {
+    min-width: 4cm;
+}
+
+.workedon {
+    text-align: initial;
+    min-width: 8cm;
+    padding-bottom: 0;
+}
+
+.contact {
+    min-width: 8cm;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

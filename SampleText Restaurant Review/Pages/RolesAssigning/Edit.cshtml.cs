@@ -16,10 +16,12 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
     [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
+        private readonly SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext _context;
         private readonly RoleManager<Roles> _roleManager;
 
-        public EditModel(RoleManager<Roles> roleManager)
+        public EditModel(SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext context, RoleManager<Roles> roleManager)
         {
+            _context = context;
             _roleManager = roleManager;
         }
 
@@ -35,6 +37,7 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
             }
 
             Roles = await _roleManager.FindByIdAsync(id);
+            
 
             if (Roles == null)
             {
@@ -59,14 +62,21 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
             appRole.Name = Roles.Name;
             appRole.Desc = Roles.Desc;
 
-            IdentityResult roleRuslt = await _roleManager.UpdateAsync(appRole);
+            IdentityResult roleResult = await _roleManager.UpdateAsync(appRole);
 
-            if (roleRuslt.Succeeded)
+            if (roleResult.Succeeded)
             {
-                return RedirectToPage("./Index");
-
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Edited Role";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                auditrecord.RoleName = Roles.Name;
+                var userID = User.Identity.Name.ToString();
+                auditrecord.FullName = userID;
+                _context.AuditRecord.Add(auditrecord);
+                await _context.SaveChangesAsync();
             }
-
+            
             return RedirectToPage("./Index");
         }
     }

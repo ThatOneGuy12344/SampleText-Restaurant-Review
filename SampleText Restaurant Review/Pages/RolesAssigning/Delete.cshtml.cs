@@ -15,10 +15,12 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
     [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
+        private readonly SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext _context;
         private readonly RoleManager<Roles> _roleManager;
 
-        public DeleteModel(RoleManager<Roles> roleManager)
+        public DeleteModel(SampleText_Restaurant_Review.Data.SampleText_Restaurant_ReviewContext context, RoleManager<Roles> roleManager)
         {
+            _context = context;
             _roleManager = roleManager;
         }
 
@@ -49,7 +51,20 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
             }
 
             Roles = await _roleManager.FindByIdAsync(id);
-            IdentityResult roleRuslt = await _roleManager.DeleteAsync(Roles);
+            IdentityResult roleResult = await _roleManager.DeleteAsync(Roles);
+
+            if (roleResult.Succeeded)
+            {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Deleted Role";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                auditrecord.RoleName = Roles.Name;
+                var userID = User.Identity.Name.ToString();
+                auditrecord.FullName = userID;
+                _context.AuditRecord.Add(auditrecord);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }

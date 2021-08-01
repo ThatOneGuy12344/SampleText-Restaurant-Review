@@ -20,6 +20,7 @@ namespace SampleText_Restaurant_Review.Models
         public DateTime DateTimeStamp { get; set; }
         public string RestaurantName { get; set; }
         public int ReviewID { get; set; }
+        public string RoleName { get; set; }
     }
 
 }

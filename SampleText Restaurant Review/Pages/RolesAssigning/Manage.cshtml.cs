@@ -57,7 +57,8 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
             return strListUsersInRole;
         }
 
-        public IList<Roles> Roles { get;set; }
+        [BindProperty]
+        public Roles Roles { get;set; }
 
         public async Task OnGetAsync()
         {
@@ -88,7 +89,16 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
             if (roleResult.Succeeded)
             {
                 TempData["message"] = "Role added to this user successfully";
-                return RedirectToPage("Manage");
+
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Added Role to User";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                auditrecord.RoleName = Roles.Name;
+                var userID = User.Identity.Name.ToString();
+                auditrecord.FullName = userID;
+                _context.AuditRecord.Add(auditrecord);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("Manage");
@@ -106,9 +116,23 @@ namespace SampleText_Restaurant_Review.Pages.RolesAssigning
 
             if (await _userManager.IsInRoleAsync(user, delrolename))
             {
-                await _userManager.RemoveFromRoleAsync(user, delrolename);
+                IdentityResult roleResult = await _userManager.RemoveFromRoleAsync(user, delrolename);
 
                 TempData["message"] = "Role removed from this user successfully";
+
+
+                if (roleResult.Succeeded)
+                {
+                    // Create an auditrecord object
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Removed Role from User";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.RoleName = Roles.Name;
+                    var userID = User.Identity.Name.ToString();
+                    auditrecord.FullName = userID;
+                    _context.AuditRecord.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+                }
             }
 
             return RedirectToPage("Manage");
