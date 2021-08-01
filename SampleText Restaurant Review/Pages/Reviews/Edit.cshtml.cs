@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,20 +45,24 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            Review.ReviewTime = DateTime.Now;
+            //Review.ReviewTime = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            if (!_context.Reviews.Find(id).Reviewer.Equals(User.Identity.Name.ToString()) && !User.IsInRole("Admin"))
+            {
+                return RedirectToPage("./Index");
+            }
+
             if (Review != null)
             {
-                Review.Reviewer = User.Identity.Name.ToString();
+                //Review.Reviewer = User.Identity.Name.ToString();
                 string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
-                _context.Attach(Review).State = EntityState.Modified;
                 try
                 {
-                    //await _context.SaveChangesAsync();
+                    _context.Attach(Review).State = EntityState.Modified;
                     if (await _context.SaveChangesAsync() > 0)
                     {
                         // Create an auditrecord object
