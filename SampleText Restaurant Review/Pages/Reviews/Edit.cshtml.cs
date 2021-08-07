@@ -59,7 +59,7 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
             if (Review != null)
             {
                 //Review.Reviewer = User.Identity.Name.ToString();
-                string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
+                //string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
                 try
                 {
                     _context.Attach(Review).State = EntityState.Modified;
