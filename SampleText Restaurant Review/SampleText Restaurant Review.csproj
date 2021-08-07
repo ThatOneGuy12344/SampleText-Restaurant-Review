@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Media\icon.jpg" />
+    <None Include="wwwroot\Media\video.mp4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AntiXSS" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.15" />
