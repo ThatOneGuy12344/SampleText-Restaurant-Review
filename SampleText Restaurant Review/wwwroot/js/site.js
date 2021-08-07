@@ -8,3 +8,7 @@ function strip(text) {
     
     return newStr;
 }
+
+function inform(msg) {
+    alert(msg);
+}

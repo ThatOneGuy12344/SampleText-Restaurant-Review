@@ -34,8 +34,21 @@ a {
     background-color: lightblue;
 }
 
+#backgroundvideo {
+    position: fixed;
+    width: 100%;
+    top: 9%;
+    left: 0;
+}
+
+#indexbackground {
+    
+}
+
 #mainpage {
+    position: relative;
     margin-top: 16%;
+    color: white;
 }
 
 #aboutustable {
@@ -101,7 +114,8 @@ body {
   margin-bottom: 60px;
 }
 .footer {
-  position: absolute;
+  position: fixed;
+  background-color: white;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
