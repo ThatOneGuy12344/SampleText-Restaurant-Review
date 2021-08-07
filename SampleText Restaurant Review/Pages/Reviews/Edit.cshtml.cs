@@ -45,23 +45,31 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            //Review.ReviewTime = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            if (!_context.Reviews.Find(id).Reviewer.Equals(User.Identity.Name.ToString()) && !User.IsInRole("Admin"))
+            string editedText = Review.Text; //retrieving current review text from input field
+            int editedRating = Review.Rating; //retrieving current rating from input field
+            Review = _context.Reviews.Find(id); //getting the old data from database
+
+            if (!Review.Reviewer.Equals(User.Identity.Name.ToString()) && !User.IsInRole("Admin"))
             {
                 return RedirectToPage("./Index");
             }
 
             if (Review != null)
             {
-                //Review.Reviewer = User.Identity.Name.ToString();
-                string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
+                //string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
                 try
                 {
+                    //updating the old data to data from page
+                    Review.ReviewTime = DateTime.Now;
+                    Review.Text = editedText;
+                    Review.Rating = editedRating;
+
+                    //informing application of the change
                     _context.Attach(Review).State = EntityState.Modified;
                     if (await _context.SaveChangesAsync() > 0)
                     {
