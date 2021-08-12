@@ -64,15 +64,15 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
                 //string name = (await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id)).Restaurant.Name;
                 try
                 {
-                    //updating the old data to data from page
-                    Review.ReviewTime = DateTime.Now;
-                    Review.Text = editedText;
-                    Review.Rating = editedRating;
-
                     //informing application of the change
                     _context.Attach(Review).State = EntityState.Modified;
-                    if (await _context.SaveChangesAsync() > 0)
+                    if (CheckDiff(Review.Text, editedText) || CheckDiff(Convert.ToString(Review.Rating), Convert.ToString(editedRating)))
                     {
+                        //updating the old data to data from page
+                        Review.ReviewTime = DateTime.Now;
+                        Review.Text = editedText;
+                        Review.Rating = editedRating;
+
                         // Create an auditrecord object
                         var auditrecord = new AuditRecord();
                         auditrecord.AuditActionType = "Edited Review";
@@ -103,6 +103,15 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
         private bool ReviewExists(int id)
         {
             return _context.Reviews.Any(e => e.ID == id);
+        }
+
+        private bool CheckDiff(string original, string edited)
+        {
+            if (original.Equals(edited))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

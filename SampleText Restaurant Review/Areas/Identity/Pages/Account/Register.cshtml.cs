@@ -94,7 +94,7 @@ namespace SampleText_Restaurant_Review.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"<img src='https://i.imgur.com/1ZK4c0m.jpeg'width='500' height = '333' ><br></br> Thank you for signing up with SampleText Restaurant Reviews! Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
