@@ -47,6 +47,11 @@ namespace SampleText_Restaurant_Review.Pages.Reviews
                 return NotFound();
             }
 
+            if (!Review.Reviewer.Equals(User.Identity.Name.ToString()) && !User.IsInRole("Admin"))
+            {
+                return RedirectToPage("./Index");
+            }
+
             Review = await _context.Reviews.Include(item => item.Restaurant).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Review != null)

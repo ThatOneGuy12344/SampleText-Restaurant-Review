@@ -27,11 +27,6 @@ namespace SampleText_Restaurant_Review.Migrations
                 oldMaxLength: 20,
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "RoleName",
-                table: "AuditRecord",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "RestaurantRequests",
                 columns: table => new
@@ -52,10 +47,6 @@ namespace SampleText_Restaurant_Review.Migrations
         {
             migrationBuilder.DropTable(
                 name: "RestaurantRequests");
-
-            migrationBuilder.DropColumn(
-                name: "RoleName",
-                table: "AuditRecord");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Text",
